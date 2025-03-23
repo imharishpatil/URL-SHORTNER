@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const AdminPage = () => {
@@ -8,10 +9,11 @@ const AdminPage = () => {
 
   // Fetch all URLs data for the admin page
   useEffect(() => {
+    const token = Cookies.get("token") || localStorage.getItem("token");
     const fetchUrls = async () => {
       try {
         const response = await axios.get(`${BACKEND_URL}/admin/urls`, {
-          withCredentials: true, // Send cookies with the request if needed
+          withCredentials: true, headers: {Authorization: `Bearer ${token}`}
         });
         setUrls(response.data);
         setLoading(false);

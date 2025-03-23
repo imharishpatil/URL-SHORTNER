@@ -47,9 +47,10 @@ const HomePage = () => {
 
   // Fetch generated URLs when the component mounts or user logs in
   const fetchGeneratedUrls = async () => {
+    const token = Cookies.get("token") || localStorage.getItem("token");
     try {
       const response = await axios.get(`${BACKEND_URL}/url/urls`, {
-        withCredentials: true,
+        withCredentials: true, headers: {Authorization: `Bearer ${token}`}
       });
 
       if (Array.isArray(response.data)) {
@@ -71,6 +72,7 @@ const HomePage = () => {
 
   // Handle URL submission
   const handleGenerateUrl = async () => {
+    const token = Cookies.get("token") || localStorage.getItem("token");
     if (!url) {
       setErrorMessage("URL cannot be empty");
       return;
@@ -82,9 +84,9 @@ const HomePage = () => {
     try {
       // Make request to backend to generate the URL
       const response = await axios.post(
-        "http://localhost:5000/url",
+        `${BACKEND_URL}/url`,
         { url },
-        { withCredentials: true }
+        { withCredentials: true, headers: {Authorization: `Bearer ${token}`}}
       );
 
       // Update the table with the new generated URL
