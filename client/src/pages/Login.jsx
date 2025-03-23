@@ -31,6 +31,7 @@ const Login = () => {
         navigate("/"); // Redirect to the home page for regular users
       }
     } catch (error) {
+      console.log("server err :", error);
       setError(error.response?.data?.message || "Server Error");
     }
   };

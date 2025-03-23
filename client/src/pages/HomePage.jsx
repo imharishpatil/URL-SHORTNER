@@ -34,6 +34,7 @@ const HomePage = () => {
             setIsLoggedIn(false);
           }
         } catch (error) {
+          console.log("server err : ", error);
           setIsLoggedIn(false);
         }
       } else {
@@ -63,6 +64,7 @@ const HomePage = () => {
         setGeneratedUrls([]);
       }
     } catch (error) {
+      console.log("server err : ", error);
       setGeneratedUrls([]);
     }
   };
@@ -98,6 +100,7 @@ const HomePage = () => {
 
       setUrl("");
     } catch (error) {
+      console.log("server err : ", error);
       if (error.response && error.response.data.message === "Login First!") {
         alert("Please log in to generate a URL.");
         navigate("/login");

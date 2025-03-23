@@ -16,6 +16,7 @@ const AdminPage = () => {
         setUrls(response.data);
         setLoading(false);
       } catch (error) {
+        console.log("server err : ", error);
         setLoading(false);
       }
     };

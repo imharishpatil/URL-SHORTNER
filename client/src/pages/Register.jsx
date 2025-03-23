@@ -23,6 +23,7 @@ const Register = () => {
       alert(response.data.message);
       navigate("/login");
     } catch (error) {
+      console.log("server err : ", error);
       setError(error.response?.data?.message || "Server Error");
     }
   };
