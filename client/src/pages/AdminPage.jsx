@@ -43,12 +43,13 @@ const AdminPage = () => {
                 <th className="py-2 px-4 text-left">Generated Date</th>
                 <th className="py-2 px-4 text-left">User Name</th>
                 <th className="py-2 px-4 text-left">Total Clicks</th>
+                <th className="py-2 px-4 text-left">Last Visit</th>
               </tr>
             </thead>
             <tbody>
               {urls.map((urlData, index) => (
                 <tr key={index} className="border-b hover:bg-gray-50">
-                  <td className="py-2 px-4">{urlData.originalUrl}</td>
+                  <td className="py-2 px-4 max-w-sm overflow-auto">{urlData.originalUrl}</td>
                   <td className="py-2 px-4">
                     <a
                       href={`${BACKEND_URL}/url/${urlData.shortId}`}
@@ -64,6 +65,7 @@ const AdminPage = () => {
                   </td>
                   <td className="py-2 px-4">{urlData.userName}</td>
                   <td className="py-2 px-4">{urlData.totalClicks}</td>
+                  <td className="py-2 px-4">{urlData.lastVisit}</td>
                 </tr>
               ))}
             </tbody>

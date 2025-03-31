@@ -1,22 +1,29 @@
 const URL = require("../models/url");
 const User = require("../models/user");
 
-// Fetch all URLs with user details and clicks
+// Fetch all URLs with user details, click count, and last visit timestamp
 async function getAllGeneratedUrls(req, res) {
   try {
-    // Populate user details and get URL data with total click count
     const urls = await URL.find()
-      .populate("createdBy", "name") // Populate user details (name)
+      .populate("createdBy", "name") 
       .exec();
 
-    // Map through the URLs and format the data to include user name and click count
-    const formattedUrls = urls.map((url) => ({
-      shortId: url.shortId,
-      originalUrl: url.redirectURL,
-      createdDate: url.createdAt,
-      userName: url.createdBy ? url.createdBy.name : "N/A",
-      totalClicks: url.visitHistory.length,
-    }));
+    // Map through URLs and format the response
+    const formattedUrls = urls.map((url) => {
+      const lastVisit =
+        url.visitHistory.length > 0
+          ? new Date(url.visitHistory[url.visitHistory.length - 1].timestamp).toLocaleString()
+          : "No Visits Yet";
+
+      return {
+        shortId: url.shortId,
+        originalUrl: url.redirectURL,
+        createdDate: new Date(url.createdAt).toLocaleString(),
+        userName: url.createdBy ? url.createdBy.name : "N/A",
+        totalClicks: url.visitHistory.length,
+        lastVisit,
+      };
+    });
 
     res.status(200).json(formattedUrls);
   } catch (error) {

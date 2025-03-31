@@ -6,30 +6,29 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const HomePage = () => {
   const [url, setUrl] = useState("");
-  const [generatedUrls, setGeneratedUrls] = useState([]); // Ensure it's an array
+  const [generatedUrls, setGeneratedUrls] = useState([]); 
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track if the user is logged in
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
   const navigate = useNavigate();
 
   // Check if user is logged in (via cookies or token)
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const token = Cookies.get("token") || localStorage.getItem("token"); // Check cookies and localStorage
+      const token = Cookies.get("token") || localStorage.getItem("token"); 
 
       if (token) {
         try {
-          // Send token to backend to check if it's valid
           const response = await axios.get(`${BACKEND_URL}/user/profile`, {
-            withCredentials: true, // Send cookies with request if using cookies
+            withCredentials: true, 
             headers: {
-              Authorization: `Bearer ${token}`, // Send token in header if stored in localStorage
+              Authorization: `Bearer ${token}`, 
             },
           });
 
           if (response.data.loggedIn) {
-            setIsLoggedIn(true); // Set login status
-            fetchGeneratedUrls(); // Fetch URLs if the user is logged in
+            setIsLoggedIn(true); 
+            fetchGeneratedUrls(); 
           } else {
             setIsLoggedIn(false);
           }
@@ -38,12 +37,12 @@ const HomePage = () => {
           setIsLoggedIn(false);
         }
       } else {
-        setIsLoggedIn(false); // Ensure state is set to false when no token
+        setIsLoggedIn(false); 
       }
     };
 
     checkLoginStatus(); // Run the login check when the component mounts
-  }, []); // Run only once when the component mounts
+  }, []); 
 
   // Fetch generated URLs when the component mounts or user logs in
   const fetchGeneratedUrls = async () => {
@@ -56,7 +55,7 @@ const HomePage = () => {
       if (Array.isArray(response.data)) {
         const formattedUrls = response.data.map((urlData) => ({
           originalUrl: urlData.redirectURL || "N/A",
-          shortUrl: `${BACKEND_URL}/url/${urlData.shortId}` || "N/A", // Fix shortUrl link
+          shortUrl: `${BACKEND_URL}/url/${urlData.shortId}` || "N/A",
           totalClicks: urlData.visitHistory?.length ?? 0,
         }));
 
@@ -155,7 +154,7 @@ const HomePage = () => {
               {generatedUrls.length > 0 ? (
                 generatedUrls.map((urlData, index) => (
                   <tr key={index} className="border-b hover:bg-gray-50">
-                    <td className="py-2 px-4">{urlData.originalUrl}</td>
+                    <td className="py-2 px-4 max-w-sm overflow-auto">{urlData.originalUrl}</td>
                     <td className="py-2 px-4">
                       <a
                         href={urlData.shortUrl}
