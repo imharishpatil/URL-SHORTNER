@@ -82,7 +82,7 @@ const Register = () => {
         </form>
         <p className="mt-4 text-center">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-500">
+          <a href="" onClick={() => navigate("/login")} className="text-blue-500">
             Login
           </a>
         </p>

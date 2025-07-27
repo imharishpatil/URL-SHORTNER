@@ -90,7 +90,7 @@ const Login = () => {
         </form>
         <p className="mt-4 text-center">
           Don't have an account?{" "}
-          <a href="/register" className="text-blue-500">
+          <a href="" onClick={() => navigate("/register")} className="text-blue-500">
             Register
           </a>
         </p>
