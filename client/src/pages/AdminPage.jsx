@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const AdminPage = () => {
   const [urls, setUrls] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   // Fetch all URLs data for the admin page
   useEffect(() => {
@@ -26,6 +28,13 @@ const AdminPage = () => {
     fetchUrls();
   }, []);
 
+  // Logout handler
+  const handleLogout = () => {
+    Cookies.remove("token");
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   // Render the table for admin
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -34,6 +43,7 @@ const AdminPage = () => {
       {loading ? (
         <p className="text-xl text-center">Loading...</p>
       ) : (
+        <>
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto bg-white border border-gray-300 rounded-md shadow-sm">
             <thead className="bg-gray-200">
@@ -71,6 +81,16 @@ const AdminPage = () => {
             </tbody>
           </table>
         </div>
+        {/* Logout Button at the bottom */}
+        <div className="flex justify-end mt-6">
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 bg-red-500 text-white rounded-lg"
+          >
+            Logout
+          </button>
+        </div>
+        </>
       )}
     </div>
   );
