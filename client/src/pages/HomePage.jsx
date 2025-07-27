@@ -76,7 +76,11 @@ const HomePage = () => {
       setErrorMessage("URL cannot be empty");
       return;
     }
-
+    // Add HTTP/HTTPS validation
+    if (!/^https?:\/\//i.test(url)) {
+      setErrorMessage("URL must start with http:// or https://");
+      return;
+    }
     setLoading(true);
     setErrorMessage("");
 
@@ -111,6 +115,14 @@ const HomePage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Logout handler
+  const handleLogout = () => {
+    Cookies.remove("token");
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/login");
   };
 
   return (
@@ -178,6 +190,18 @@ const HomePage = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Logout Button at the bottom */}
+        {isLoggedIn && (
+          <div className="flex justify-end mb-6">
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 bg-red-500 text-white rounded-lg"
+            >
+              Logout
+            </button>
+          </div>
+        )}
 
         {/* Login/Signup Buttons */}
         {!isLoggedIn && (
