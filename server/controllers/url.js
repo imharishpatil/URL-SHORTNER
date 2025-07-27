@@ -12,7 +12,7 @@ async function handleGenerateNewShortURL(req, res) {
     }
 
     let formattedUrl = body.url.trim();
-    if (!/^https?:\/\//i.test()) {
+    if (!/^https?:\/\//i.test(formattedUrl)) {
       formattedUrl = `https://${formattedUrl}`;
     }
 
