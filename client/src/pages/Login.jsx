@@ -39,6 +39,19 @@ const Login = () => {
   return (
     <div className="min-h-screen flex justify-center items-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+        {/* Admin Auto-fill Button */}
+        <div className="flex justify-end mb-2">
+          <button
+            type="button"
+            className="bg-gray-200 text-gray-700 px-3 py-1 rounded hover:bg-gray-300"
+            onClick={() => {
+              setEmail("admin@gmail.com");
+              setPassword("Admin@123");
+            }}
+          >
+            Admin
+          </button>
+        </div>
         <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <form onSubmit={handleSubmit}>
