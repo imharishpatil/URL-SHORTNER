@@ -40,5 +40,4 @@ npm run dev
 # or
 yarn dev
 ```
-5. The API server should be running at http://localhost:4000 (or as configured)
-6. 
+5. The API server should be running at http://localhost:4000 (or as configured) 
